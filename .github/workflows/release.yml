@@ -19,7 +19,6 @@ on:
         type: string
         description: Repository to use
         required: true
-        default: ''
       RELEASE_BRANCH:
         type: string
         description: Branch to perform the release
@@ -36,9 +35,9 @@ jobs:
       - name: Release
         uses: indiesdev/curl@v1.1
         with:
-          url: https://circleci.com/api/v2/project/gh/next-escape/${{ github.event.inputs.RELEASE_REPO }}/pipeline
+          url: https://circleci.com/api/v2/project/gh/${{ inputs.RELEASE_REPO }}/pipeline
           method: "POST"
           accept: 200, 201, 204
           headers: "{ \"Circle-Token\": ${{ secrets.CIRCLE_TOKEN }}, \"Content-Type\": application/json }"
-          body: '{ "branch": "${{ github.event.inputs.RELEASE_BRANCH }}", "parameters": { "IS_RELEASE": ${{ github.event.inputs.IS_RELEASE }}, "IS_PUBLISH": ${{ github.event.inputs.IS_PUBLISH }}  } }'
+          body: '{ "branch": "${{ inputs.RELEASE_BRANCH }}", "parameters": { "IS_RELEASE": ${{ inputs.IS_RELEASE }}, "IS_PUBLISH": ${{ inputs.IS_PUBLISH }}  } }'
           log-response: true
