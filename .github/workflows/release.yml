@@ -3,6 +3,18 @@
 
 name: Release
 on:
+  workflow_call:
+    inputs:
+      IS_RELEASE:
+        type: boolean
+        description: Perform a release. Upgrade the version
+        required: true
+        default: false
+      IS_PUBLISH:
+        type: boolean
+        description: Publish the release
+        required: true
+        default: false
   workflow_dispatch:
     inputs:
       IS_RELEASE:
