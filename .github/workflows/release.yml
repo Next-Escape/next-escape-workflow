@@ -15,11 +15,16 @@ on:
         description: Publish the release
         required: true
         default: false
-      GITHUB_REPO:
+      RELEASE_REPO:
         type: string
         description: Repository to use
         required: true
         default: ''
+      RELEASE_BRANCH:
+        type: string
+        description: Branch to perform the release
+        required: false
+        default: main
   workflow_dispatch:
     inputs:
       IS_RELEASE:
@@ -32,6 +37,18 @@ on:
         description: Publish the release
         required: true
         default: false
+      RELEASE_REPO:
+        type: choice
+        description: Repository to use
+        required: true
+        options:
+          - next-escape-api
+          - next-escape-data
+      RELEASE_BRANCH:
+        type: string
+        description: Branch to perform the release
+        required: false
+        default: main
 
 jobs:
   release:
@@ -43,9 +60,9 @@ jobs:
       - name: Release
         uses: indiesdev/curl@v1.1
         with:
-          url: https://circleci.com/api/v2/project/gh/next-escape/${{ github.event.inputs.GITHUB_REPO }}/pipeline
+          url: https://circleci.com/api/v2/project/gh/next-escape/${{ github.event.inputs.RELEASE_REPO }}/pipeline
           method: "POST"
           accept: 200, 201, 204
           headers: "{ \"Circle-Token\": ${{ secrets.CIRCLE_TOKEN }}, \"Content-Type\": application/json }"
-          body: '{ "branch": "${{ github.ref_name }}",  "parameters": { "IS_RELEASE": ${{ github.event.inputs.IS_RELEASE }}, "IS_PUBLISH": ${{ github.event.inputs.IS_PUBLISH }}  } }'
+          body: '{ "branch": "${{ github.event.inputs.RELEASE_BRANCH }}", "parameters": { "IS_RELEASE": ${{ github.event.inputs.IS_RELEASE }}, "IS_PUBLISH": ${{ github.event.inputs.IS_PUBLISH }}  } }'
           log-response: true
