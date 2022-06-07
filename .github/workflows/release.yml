@@ -15,6 +15,11 @@ on:
         description: Publish the release
         required: true
         default: false
+      GITHUB_REPO:
+        type: string
+        description: Repository to use
+        required: true
+        default: ''
   workflow_dispatch:
     inputs:
       IS_RELEASE:
@@ -38,7 +43,7 @@ jobs:
       - name: Release
         uses: indiesdev/curl@v1.1
         with:
-          url: https://circleci.com/api/v2/project/gh/${{ github.repository }}/pipeline
+          url: https://circleci.com/api/v2/project/gh/next-escape/${{ github.event.inputs.GITHUB_REPO }}/pipeline
           method: "POST"
           accept: 200, 201, 204
           headers: "{ \"Circle-Token\": ${{ secrets.CIRCLE_TOKEN }}, \"Content-Type\": application/json }"
