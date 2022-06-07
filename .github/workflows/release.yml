@@ -4,9 +4,6 @@
 name: Release
 on:
   workflow_call:
-    secrets:
-      token:
-        required: true
     inputs:
       IS_RELEASE:
         type: boolean
@@ -42,6 +39,6 @@ jobs:
           url: https://circleci.com/api/v2/project/gh/next-escape/${{ github.event.inputs.RELEASE_REPO }}/pipeline
           method: "POST"
           accept: 200, 201, 204
-          headers: "{ \"Circle-Token\": ${{ secrets.token }}, \"Content-Type\": application/json }"
+          headers: "{ \"Circle-Token\": ${{ secrets.CIRCLE_TOKEN }}, \"Content-Type\": application/json }"
           body: '{ "branch": "${{ github.event.inputs.RELEASE_BRANCH }}", "parameters": { "IS_RELEASE": ${{ github.event.inputs.IS_RELEASE }}, "IS_PUBLISH": ${{ github.event.inputs.IS_PUBLISH }}  } }'
           log-response: true
