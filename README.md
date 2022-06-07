@@ -30,4 +30,5 @@ jobs:
       IS_RELEASE: ${{ github.event.inputs.IS_RELEASE == 'true' }}
       IS_PUBLISH: ${{ github.event.inputs.IS_PUBLISH == 'true' }}
       GITHUB_REPO: ${{ github.repository }}
+    secrets: inherit
 ```
