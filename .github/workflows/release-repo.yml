@@ -1,12 +1,6 @@
-# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
-
-name: Release
+name: Release a repository
 on:
-  workflow_call:
-    secrets:
-      token:
-        required: true
+  workflow_dispatch:
     inputs:
       IS_RELEASE:
         type: boolean
@@ -19,10 +13,12 @@ on:
         required: true
         default: false
       RELEASE_REPO:
-        type: string
+        type: choice
         description: Repository to use
         required: true
-        default: ''
+        options:
+          - next-escape-api
+          - next-escape-data
       RELEASE_BRANCH:
         type: string
         description: Branch to perform the release
@@ -42,6 +38,6 @@ jobs:
           url: https://circleci.com/api/v2/project/gh/next-escape/${{ github.event.inputs.RELEASE_REPO }}/pipeline
           method: "POST"
           accept: 200, 201, 204
-          headers: "{ \"Circle-Token\": ${{ secrets.token }}, \"Content-Type\": application/json }"
+          headers: "{ \"Circle-Token\": ${{ secrets.CIRCLE_TOKEN }}, \"Content-Type\": application/json }"
           body: '{ "branch": "${{ github.event.inputs.RELEASE_BRANCH }}", "parameters": { "IS_RELEASE": ${{ github.event.inputs.IS_RELEASE }}, "IS_PUBLISH": ${{ github.event.inputs.IS_PUBLISH }}  } }'
           log-response: true
