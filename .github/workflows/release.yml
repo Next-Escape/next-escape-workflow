@@ -41,3 +41,4 @@ jobs:
           headers: "{ \"Circle-Token\": ${{ secrets.CIRCLE_TOKEN }}, \"Content-Type\": application/json }"
           body: '{ "branch": "${{ inputs.RELEASE_BRANCH }}", "parameters": { "IS_RELEASE": ${{ inputs.IS_RELEASE }}, "IS_PUBLISH": ${{ inputs.IS_PUBLISH }}  } }'
           log-response: true
+        timeout-minutes: 5000
