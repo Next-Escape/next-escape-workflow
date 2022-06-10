@@ -25,7 +25,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   release:
-    uses: Next-Escape/next-escape-workflow/.github/workflows/release.yml@main
+    uses: next-escape/next-escape-workflow/.github/workflows/release.yml@main
     with:
       IS_RELEASE: ${{ github.event.inputs.IS_RELEASE == 'true' }}
       IS_PUBLISH: ${{ github.event.inputs.IS_PUBLISH == 'true' }}
