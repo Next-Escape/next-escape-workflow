@@ -19,6 +19,7 @@ on:
         options:
           - next-escape-api
           - next-escape-data
+          - next-escape-model
       RELEASE_BRANCH:
         type: string
         description: Branch to perform the release
