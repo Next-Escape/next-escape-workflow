@@ -29,6 +29,7 @@ jobs:
     with:
       IS_RELEASE: ${{ github.event.inputs.IS_RELEASE == 'true' }}
       IS_PUBLISH: ${{ github.event.inputs.IS_PUBLISH == 'true' }}
-      GITHUB_REPO: ${{ github.repository }}
+      RELEASE_REPO: ${{ github.repository }}
+      RELEASE_BRANCH: ${{ github.ref_name }}
     secrets: inherit
 ```
